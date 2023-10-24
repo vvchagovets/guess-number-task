@@ -24,6 +24,31 @@ def random_predict(number: int = 1) -> int:
     return count
 
 
+def disect_predict(number: int = 1) -> int:
+    """Guessing a number by dividing the range in half
+
+    Args:
+        number (int, optional): Загаданное число. Defaults to 1.
+
+    Returns:
+        int: Число попыток
+    """
+    count = 0
+    
+    target_range = [1, 101]
+
+    while True:
+        count += 1
+        # предполагаемое число
+        predict_number = target_range[0] +  (target_range[1] - target_range[0]) // 2 
+        if predict_number > number:
+            target_range[1] = predict_number
+        elif predict_number < number:
+            target_range[0] = predict_number
+        elif predict_number == number:
+            break  # выход из цикла если угадали
+    return count
+
 def score_game(random_predict) -> int:
     """За какое количство попыток в среднем за 1000 подходов угадывает наш алгоритм
 
@@ -34,11 +59,11 @@ def score_game(random_predict) -> int:
         int: среднее количество попыток
     """
     count_ls = []
-    #np.random.seed(1)  # фиксируем сид для воспроизводимости
+    np.random.seed(1)  # фиксируем сид для воспроизводимости
     random_array = np.random.randint(1, 101, size=(1000))  # загадали список чисел
 
     for number in random_array:
-        count_ls.append(random_predict(number))
+        count_ls.append(disect_predict(number))
 
     score = int(np.mean(count_ls))
     print(f"Ваш алгоритм угадывает число в среднем за:{score} попыток")
