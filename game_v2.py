@@ -43,6 +43,7 @@ def smart_random_predict(number: int = 1) -> int:
     while True:
         count += 1
         predict_number = np.random.randint(target_range[0], target_range[1])  # предполагаемое число
+        # изменение диапазона угадывания, в зависимости от результата сравнения предполагаемого с загаданным числом
         if predict_number > number:
             target_range[1] = predict_number
         elif predict_number < number:
