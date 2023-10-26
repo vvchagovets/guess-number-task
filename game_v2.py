@@ -1,5 +1,8 @@
 """Игра угадай число
 Компьютер сам загадывает и сам угадывает число
+
+Два варианта угадывания: случайный подбор (random_predict), делением диапазона пополам
+(disect_predict)
 """
 
 import numpy as np
@@ -36,7 +39,8 @@ def disect_predict(number: int = 1) -> int:
     count = 0
     
     target_range = [1, 101]
-
+    
+    # divides the range into two parts and selects the part with the hidden number
     while True:
         count += 1
         # предполагаемое число
@@ -49,11 +53,12 @@ def disect_predict(number: int = 1) -> int:
             break  # выход из цикла если угадали
     return count
 
-def score_game(random_predict) -> int:
+def score_game(prediction_function) -> int:
     """За какое количство попыток в среднем за 1000 подходов угадывает наш алгоритм
 
     Args:
-        random_predict ([type]): функция угадывания
+        random_predict ([type]): функция угадывания случайным образом
+        disect_predict ([type]): функция угадывания делением диапазона пополам
 
     Returns:
         int: среднее количество попыток
@@ -63,7 +68,7 @@ def score_game(random_predict) -> int:
     random_array = np.random.randint(1, 101, size=(1000))  # загадали список чисел
 
     for number in random_array:
-        count_ls.append(disect_predict(number))
+        count_ls.append(prediction_function(number))
 
     score = int(np.mean(count_ls))
     print(f"Ваш алгоритм угадывает число в среднем за:{score} попыток")
@@ -72,4 +77,4 @@ def score_game(random_predict) -> int:
 
 if __name__ == "__main__":
     # RUN
-    score_game(random_predict)
+    score_game(disect_predict)
