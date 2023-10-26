@@ -101,4 +101,4 @@ def score_game(prediction_function) -> int:
 
 if __name__ == "__main__":
     # RUN
-    score_game(smart_random_predict)
+    score_game(disect_predict)
