@@ -26,6 +26,30 @@ def random_predict(number: int = 1) -> int:
             break  # выход из цикла если угадали
     return count
 
+def smart_random_predict(number: int = 1) -> int:
+    """Рандомно угадываем число, учитывая больше или меньше догадка 
+    по сравнению с загаданным
+
+    Args:
+        number (int, optional): Загаданное число. Defaults to 1.
+
+    Returns:
+        int: Число попыток
+    """
+    count = 0
+    
+    target_range = [1, 101]
+
+    while True:
+        count += 1
+        predict_number = np.random.randint(target_range[0], target_range[1])  # предполагаемое число
+        if predict_number > number:
+            target_range[1] = predict_number
+        elif predict_number < number:
+            target_range[0] = predict_number
+        elif predict_number == number:
+            break  # выход из цикла если угадали
+    return count
 
 def disect_predict(number: int = 1) -> int:
     """Guessing a number by dividing the range in half
@@ -77,4 +101,4 @@ def score_game(prediction_function) -> int:
 
 if __name__ == "__main__":
     # RUN
-    score_game(disect_predict)
+    score_game(smart_random_predict)
